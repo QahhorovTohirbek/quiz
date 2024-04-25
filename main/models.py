@@ -49,7 +49,7 @@ class Question(CodeGenerator):
     
     @property
     def options(self):
-        return Option.objects.fil(question=self)
+        return Option.objects.filter(question=self)
 
 
 

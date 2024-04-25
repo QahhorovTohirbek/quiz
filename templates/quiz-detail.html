@@ -22,16 +22,29 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Nom</th>
-                                <th scope="col">Harakatlar</th>
+                                <th scope="col">Quiz</th>
+                                <th scope="col">{{quiz}}</th>
                             </tr>
+                            <tr>
+                                <th scope="col"> T/r </th>
+                                <th scope="col"> Questions </th>
+                                <th scope="col"> Options </th>
+
                         </thead>
                         <tbody>
-                            {% for q in queryset %}
+                            {% for question in questions %}
                             <tr>
                                 <th scope="row">{{forloop.counter}}</th>
-                                <td>{{q.name}}</td>
+                                <td>
+                                    {{question.name}}
+                                    <ul>
+                                        {% for option in options %}
+                                        <li>
+                                            {{option}}{{}}
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </td>
                                 <td>
                                     <button type="button" class="btn btn-icon btn-hover btn-sm btn-rounded pull-right" data-toggle="modal" data-target=".bd-example-modal-lg{{forloop.counter}}">
                                         <i class="anticon anticon-edit"></i>
@@ -41,7 +54,7 @@
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title h4">{{q.name}}</h5>
+                                                    <h5 class="modal-title h4">{{question.name}}</h5>
                                                     <button type="button" class="close" data-dismiss="modal">
                                                         <i class="anticon anticon-close"></i>
                                                     </button>
@@ -49,7 +62,7 @@
                                                 <form action="#" method="post">
                                                     {% csrf_token %}
                                                 <div class="modal-body">
-                                                    <input type="text" class="form-control" value="{{q.name}}" name="name">
+                                                    <input type="text" class="form-control" value="{{question.name}}" name="name">
                                                 </div>
                                                 <button type="submit" class="btn btn-primary btn-tone" >O`zgartirish</button>
                                                 </form>
@@ -64,16 +77,16 @@
                                         <div class="modal-dialog modal-sm">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title h4">{{q.name}}</h5>
+                                                    <h5 class="modal-title h4">{{question.name}}</h5>
                                                     <button type="button" class="close" data-dismiss="modal">
                                                         <i class="anticon anticon-close"></i>
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <b>{{q.name}} kategoriyani o`chirmoqchimisiz?</b>
+                                                    <b>{{question.name}} kategoriyani o`chirmoqchimisiz?</b>
                                                 </div>
                                                 <div class="btn-group">
-                                                    <form method="post" action="{% url 'category_delete' q.code %}">
+                                                    <form method="post" action="#">
                                                         {% csrf_token %}
                                                     <button type="submit" class="btn btn-primary btn-tone">Ha</button>
                                                     <button class="btn btn-danger btn-tone" type="button" data-dismiss="modal">Yo`q</button>

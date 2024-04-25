@@ -32,9 +32,11 @@ def quiz_create(request):
 def quiz_detail(request, code):
     quiz = models.Quiz.objects.get(code=code)
     questions = models.Question.objects.filter(quiz=quiz)
+    options = models.Option.objects.filter(question__in=questions)
     context = {
         'quiz':quiz,
-        'questions':questions
+        'questions':questions,
+        'options':options
     }
     return render(request, 'quiz-detail.html', context)
 
