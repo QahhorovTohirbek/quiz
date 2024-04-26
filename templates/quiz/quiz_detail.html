@@ -22,25 +22,27 @@
                     <table class="table">
                         <thead>
                             <tr>
+                                <th scope="col"> <a href="{% url 'dashboard:answer_list' quiz.code %}"> <i>Natijalar</i></a></th>
+                                <th scope="col"><a href="{% url 'dashboard:question_create' quiz.code %}"><i class="anticon anticon-plus"> Savol qo'shish </i></a></th>
+                            </tr>
+                            <tr>
                                 <th scope="col">Quiz</th>
                                 <th scope="col">{{quiz}}</th>
                             </tr>
                             <tr>
-                                <th scope="col"> T/r </th>
-                                <th scope="col"> Questions </th>
-                                <th scope="col"> Options </th>
+                                <th scope="col"> Savollar </th>
+                                <th scope="col"> Harakantlar </th>
 
                         </thead>
                         <tbody>
                             {% for question in questions %}
                             <tr>
-                                <th scope="row">{{forloop.counter}}</th>
                                 <td>
-                                    {{question.name}}
+                                    <b>{{forloop.counter}}. {{question.name}}</b>
                                     <ul>
-                                        {% for option in options %}
+                                        {% for option in question.option_set.all %}
                                         <li>
-                                            {{option}}{{}}
+                                            {{option}} 
                                         </li>
                                         {% endfor %}
                                     </ul>
@@ -50,7 +52,7 @@
                                         <i class="anticon anticon-edit"></i>
                                     </button>
                                     <!-- Large modal -->
-                                    <div class="modal fade bd-example-modal-lg{{forloop.counter}}">
+                                    <div class="modal fade bd-example-modal-lg{{question.code}}">
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -59,11 +61,16 @@
                                                         <i class="anticon anticon-close"></i>
                                                     </button>
                                                 </div>
-                                                <form action="#" method="post">
+                                                <form action="{% url 'dashboard:question_update' question.code %}" method="post">
                                                     {% csrf_token %}
                                                 <div class="modal-body">
                                                     <input type="text" class="form-control" value="{{question.name}}" name="name">
                                                 </div>
+                                                {% for option in options %}
+                                                <div class="modal-body">
+                                                    <input type="text" class="form-control" value="{{option.name}}" name="name">
+                                                </div>
+                                                {% endfor %}
                                                 <button type="submit" class="btn btn-primary btn-tone" >O`zgartirish</button>
                                                 </form>
                                             </div>
@@ -73,7 +80,7 @@
                                     <button type="button" class="btn btn-icon btn-hover btn-sm btn-rounded" data-toggle="modal" data-target=".bd-example-modal-sm{{forloop.counter}}">
                                         <i class="anticon anticon-delete"></i>
                                     </button>
-                                    <div class="modal fade bd-example-modal-sm{{forloop.counter}}">
+                                    <div class="modal fade bd-example-modal-sm {{question.code}}">
                                         <div class="modal-dialog modal-sm">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -86,7 +93,7 @@
                                                     <b>{{question.name}} kategoriyani o`chirmoqchimisiz?</b>
                                                 </div>
                                                 <div class="btn-group">
-                                                    <form method="post" action="#">
+                                                    <form method="post" action="{% url 'dashboard:question_delete' question.code %}">
                                                         {% csrf_token %}
                                                     <button type="submit" class="btn btn-primary btn-tone">Ha</button>
                                                     <button class="btn btn-danger btn-tone" type="button" data-dismiss="modal">Yo`q</button>

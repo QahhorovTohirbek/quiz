@@ -6,7 +6,7 @@ import string
 
 
 class CodeGenerator(models.Model):
-    code = models.CharField(max_length=255, null=True, blank=True)
+    code = models.CharField(max_length=255, null=True, blank=True, unique=True)
 
     @staticmethod
     def generatecode():
@@ -50,7 +50,6 @@ class Question(CodeGenerator):
     @property
     def options(self):
         return Option.objects.filter(question=self)
-
 
 
 

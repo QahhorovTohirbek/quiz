@@ -1,0 +1,37 @@
+{% extends 'front/base.html' %}
+
+{% block content %}
+
+
+<div class="main-content">
+    
+    <div class="card">
+        <div class="card-body">
+            <h4>Quizlar ro`yxati</h4>
+            <div class="m-t-25">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">T/r</th>
+                                <th scope="col">Nomi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for quiz in quizzes %}
+                            <tr>
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td> <a href="{% url 'front:quiz_detail' quiz.code %}"> {{quiz.name}} </a> </td>
+                               
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
