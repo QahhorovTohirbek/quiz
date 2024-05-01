@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 
 from random import sample
 import string
+from ckeditor.fields import RichTextField
+
 
 
 class CodeGenerator(models.Model):
@@ -27,7 +29,7 @@ class CodeGenerator(models.Model):
 
 
 class Quiz(CodeGenerator):
-    name = models.CharField(max_length=255)
+    name = RichTextField()
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
 
@@ -37,7 +39,7 @@ class Quiz(CodeGenerator):
     
 
 class Question(CodeGenerator):
-    name = models.CharField(max_length=255)
+    name = RichTextField()
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
 
     def __str__(self) -> str:

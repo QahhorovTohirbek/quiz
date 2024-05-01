@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from main import models
+from main import models, forms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -20,7 +20,7 @@ def index(request):
 
     return render(request, 'index.html', context)
 
-#---------Quiz----------
+# ---------Quiz----------
 def quiz_create(request):
     if request.method == 'POST':
         name = request.POST.get('name') 
@@ -137,6 +137,16 @@ def answer_detail(request, code):
     }
 
     return render(request, 'answer/answer_detail.html', context)
+
+
+# def quiz_create(request):
+#     form = forms.QuizForm
+#     if request.method == 'POST':
+#         form = forms.QuizForm(data=request.POST)
+#         if form.is_valid():
+#             form.save()
+
+#     return render(request, 'quiz/quiz_create.html', {'form':form})
 
 
 #---------User----------
