@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from random import sample
+from random import sample, shuffle
 import string
 from ckeditor.fields import RichTextField
 
@@ -51,7 +51,8 @@ class Question(CodeGenerator):
     
     @property
     def options(self):
-        return Option.objects.filter(question=self)
+        options_list = shuffle(list(Option.objects.filter(question=self)))
+        return options_list
 
 
 

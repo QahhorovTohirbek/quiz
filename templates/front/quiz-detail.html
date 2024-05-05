@@ -31,7 +31,7 @@
                 {% for question in questions %}
                 <div class="container">
                     <div class="d-flex justify-content-between">
-                    <h2 class="font-weight-normal m-b-10">{{ forloop.counter }}. {{ question.name }}</h2>
+                    <h2 class="font-weight-normal m-b-10">{{ forloop.counter }}. {{ question.name | striptags }}</h2>
                     </div>
                     <div class="card-body">
                     <div class="m-t-25">

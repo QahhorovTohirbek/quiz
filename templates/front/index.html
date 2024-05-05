@@ -21,7 +21,7 @@
                             {% for quiz in quizzes %}
                             <tr>
                                 <th scope="row">{{forloop.counter}}</th>
-                                <td> <a href="{% url 'front:quiz_detail' quiz.code %}"> {{quiz.name}} </a> </td>
+                                <td> <a href="{% url 'front:quiz_detail' quiz.code %}"> {{quiz.name | striptags}} </a> </td>
                                
                             </tr>
                             {% endfor %}

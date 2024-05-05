@@ -21,8 +21,12 @@
                 <div class="m-t-25" style="max-width: 700px">
                     <form method="post">
                         {% csrf_token %}
-                        {{form.media}}
-                        {{form.as_p}}
+                        <div class="form-group row">
+                            <label for="inputName" class="col-sm-2 col-form-label">Nomi</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inputName" placeholder="Quiz nomini kiriting" name="name" required>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -34,9 +38,3 @@
 
 {% endblock %}
 
-<!-- <div class="form-group row">
-    <label for="inputName" class="col-sm-2 col-form-label">Nomi</label>
-    <div class="col-sm-10">
-        <input type="text" class="form-control" id="inputName" placeholder="Quiz nomini kiriting" name="name" required>
-    </div>
-</div> -->
