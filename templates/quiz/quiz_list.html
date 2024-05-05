@@ -30,7 +30,7 @@
                             {% for quiz in quizzes %}
                             <tr>
                                 <th scope="row">{{forloop.counter}}</th>
-                                <td> <a href="{% url 'dashboard:quiz_detail' quiz.code %}"> {{quiz.name}} </a> </td>
+                                <td> <a href="{% url 'dashboard:quiz_detail' quiz.code %}"> {{quiz.name | striptags}} </a> </td>
                                 
                                 <td>
                                     <button type="button" class="btn btn-icon btn-hover btn-sm btn-rounded pull-right" data-toggle="modal" data-target=".bd-example-modal-lg{{forloop.counter}}">

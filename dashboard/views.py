@@ -1,8 +1,11 @@
+from datetime import datetime
+from django.utils.html import strip_tags
 from django.shortcuts import render, redirect
 from main import models
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from openpyxl import Workbook
 
 
 @login_required(login_url='dashboard:log_in')
@@ -137,6 +140,61 @@ def answer_detail(request, code):
     }
 
     return render(request, 'answer/answer_detail.html', context)
+
+
+
+
+def write_excel(request, code):
+    answers = models.Answer.objects.filter(quiz__code=code)
+    details = models.AnswerDetail.objects.filter(answer__in=answers)
+    user_name = []
+    email = []
+    phone = []
+    
+    for answer in answers:
+        user_name.append(answer.user_name)
+        email.append(answer.email) 
+        phone.append(answer.phone)
+
+    correct = 0
+    in_correct = 0
+
+    for detail in details:
+        if detail.is_correct:
+            correct += 1
+        else:
+            in_correct += 1
+
+    quiz_name = strip_tags(answers[0].quiz.name)
+    
+    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+    filename = f"{quiz_name}_{timestamp}.xlsx"
+
+    wb = Workbook()
+    ws = wb.active  
+
+    ws['A1'] = 'User_name'
+    ws['C1'] = 'Email'
+    ws['D1'] = 'Phone'
+    ws['E1'] = 'Total questions'
+    ws['F1'] = 'Correct'
+    ws['G1'] = 'Incorrect'
+
+    for i in range(len(user_name)):
+        ws.cell(row=i+2, column=1, value=user_name[i])
+        ws.cell(row=i+2, column=2, value=email[i])
+        ws.cell(row=i+2, column=3, value=phone[i])
+        ws.cell(row=i+2, column=4, value=len(details))
+        ws.cell(row=i+2, column=5, value=correct)
+        ws.cell(row=i+2, column=6, value=in_correct)
+
+    wb.save(filename)
+
+    return redirect('dashboard:quiz_list')
+
+
+
+
 
 
 

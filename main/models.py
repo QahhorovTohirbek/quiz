@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 from random import sample, shuffle
 import string
-from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 
@@ -29,7 +29,7 @@ class CodeGenerator(models.Model):
 
 
 class Quiz(CodeGenerator):
-    name = RichTextField()
+    name = RichTextUploadingField()
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
 
@@ -39,7 +39,7 @@ class Quiz(CodeGenerator):
     
 
 class Question(CodeGenerator):
-    name = RichTextField()
+    name = RichTextUploadingField()
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
@@ -51,7 +51,9 @@ class Question(CodeGenerator):
     
     @property
     def options(self):
-        options_list = shuffle(list(Option.objects.filter(question=self)))
+        options = Option.objects.filter(question=self)
+        options_list = list(options)
+        shuffle(options_list)
         return options_list
 
 

@@ -5,7 +5,7 @@
 
 <div class="main-content">
     <div class="page-header">
-        <h2 class="header-title">SHOP</h2>
+        <h2 class="header-title">Quiz</h2>
         <div class="header-sub-title">
             <nav class="breadcrumb breadcrumb-dash">
                 <a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Dashboard</a>
@@ -22,12 +22,12 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col"> <a href="{% url 'dashboard:answer_list' quiz.code %}"> <i>Natijalar</i></a></th>
+                                <th scope="col"> <a href="{% url 'dashboard:answer_list' quiz.code %}"> <i style="margin-right: 20px;">Natijalar</i> <a href="{% url 'dashboard:write_excel' quiz.code %}"><i class="anticon anticon-download"></i></a> </a></th>
                                 <th scope="col"><a href="{% url 'dashboard:question_create' quiz.code %}"><i class="anticon anticon-plus"> Savol qo'shish </i></a></th>
                             </tr>
                             <tr>
                                 <th scope="col">Quiz</th>
-                                <th scope="col">{{quiz}}</th>
+                                <th scope="col">{{quiz | striptags}}</th>
                             </tr>
                             <tr>
                                 <th scope="col"> Savollar </th>
@@ -56,7 +56,7 @@
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title h4">{{question.name}}</h5>
+                                                    <h5 class="modal-title h4">{{question.name | striptags}}</h5>
                                                     <button type="button" class="close" data-dismiss="modal">
                                                         <i class="anticon anticon-close"></i>
                                                     </button>

@@ -20,6 +20,8 @@ urlpatterns = [
     # answer
     path('answer-list/<str:code>/', views.answer_list, name='answer_list'),
     path('answer-detail/<str:code>/', views.answer_detail, name='answer_detail'),
+    path('write-excel/<str:code>/', views.write_excel, name='write_excel'),
+    
 
     # user
     path('log-in/', views.log_in, name='log_in'),
