@@ -46,7 +46,6 @@ def answer_create(request, code):
     answers = request.data.get('answers')
     correct = 0 
     wrong = 0
-    print(answers.items())
     for key, value in answers.items():
         question = models.Question.objects.get(code=key)
         option = models.Option.objects.get(code=value)
